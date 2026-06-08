@@ -236,16 +236,27 @@
 
         <fieldset>
           <legend>お支払い方法</legend>
-          <div class="toggle-group" role="group" aria-label="お支払い方法">
-            <input type="radio" name="method" id="method-card" value="card" checked />
-            <label for="method-card">クレジットカード</label>
-            <input type="radio" name="method" id="method-bank" value="bank" />
-            <label for="method-bank">銀行振込</label>
+          <div class="method-grid" role="group" aria-label="お支払い方法">
+            <input type="radio" name="method" id="m-card" value="card" checked />
+            <label for="m-card"><span aria-hidden="true">💳</span> クレジットカード</label>
+            <input type="radio" name="method" id="m-qr" value="qr" />
+            <label for="m-qr"><span aria-hidden="true">📱</span> QRコード決済</label>
+            <input type="radio" name="method" id="m-konbini" value="konbini" />
+            <label for="m-konbini"><span aria-hidden="true">🏪</span> コンビニ・キャリア</label>
+            <input type="radio" name="method" id="m-bank" value="bank" />
+            <label for="m-bank"><span aria-hidden="true">🏦</span> 銀行振込</label>
+            <input type="radio" name="method" id="m-yucho" value="yucho" />
+            <label for="m-yucho"><span aria-hidden="true">📮</span> ゆうちょ振替</label>
+            <input type="radio" name="method" id="m-crypto" value="crypto" />
+            <label for="m-crypto"><span aria-hidden="true">🪙</span> 仮想通貨</label>
+            <input type="radio" name="method" id="m-platform" value="platform" />
+            <label for="m-platform"><span aria-hidden="true">🌐</span> 寄付サイト経由</label>
           </div>
 
-          <div class="bank-details" id="bank-details" hidden>
-            <p class="bank-lead">下記口座へお振込みください。お振込み手数料はご負担をお願いいたします。</p>
-            <dl class="bank-table">
+          <!-- 銀行振込 -->
+          <div class="method-panel" data-method="bank" hidden>
+            <p class="panel-lead">下記口座へお振込みください。振込手数料はご負担をお願いいたします。</p>
+            <dl class="kv-table">
               <div><dt>銀行名</dt><dd>○○銀行（仮）</dd></div>
               <div><dt>支店名</dt><dd>○○支店（仮）</dd></div>
               <div><dt>口座種別</dt><dd>普通（仮）</dd></div>
@@ -253,10 +264,67 @@
               <div><dt>口座名義</dt><dd>一般財団法人 国際ピース・ラビング・ピープル財団</dd></div>
               <div><dt>口座名義（カナ）</dt><dd>ザイ）コクサイピースラビングピープルザイダン（仮）</dd></div>
             </dl>
-            <p class="bank-note">
-              ※ 口座情報は <strong>仮（サンプル）</strong> です。正式な振込先が決まり次第、差し替えてください。<br />
-              ※ 振込人名義の前に整理番号などを付す運用とする場合は、確定後にこちらでご案内します。
+            <p class="panel-note">※ 口座情報は <strong>仮（サンプル）</strong> です。正式な振込先が決まり次第、差し替えてください。</p>
+          </div>
+
+          <!-- ゆうちょ振替 -->
+          <div class="method-panel" data-method="yucho" hidden>
+            <p class="panel-lead">ゆうちょ銀行の振替口座でも受け付けます。</p>
+            <dl class="kv-table">
+              <div><dt>記号</dt><dd>00000（仮）</dd></div>
+              <div><dt>番号</dt><dd>00000000（仮）</dd></div>
+              <div><dt>加入者名</dt><dd>一般財団法人 国際ピース・ラビング・ピープル財団</dd></div>
+              <div><dt>他行から</dt><dd>〇二八（ゼロニハチ）支店／普通／0000000（仮）</dd></div>
+            </dl>
+            <p class="panel-note">※ 口座情報は <strong>仮（サンプル）</strong> です。正式な番号に差し替えてください。</p>
+          </div>
+
+          <!-- QRコード決済 -->
+          <div class="method-panel" data-method="qr" hidden>
+            <p class="panel-lead">スマートフォンの決済アプリでQRコードを読み取ってください。</p>
+            <div class="qr-row">
+              <div class="qr-box" aria-hidden="true">QRコード<br />（仮）</div>
+              <div class="qr-info">
+                <p><strong>対応予定</strong></p>
+                <p>PayPay ／ LINE Pay ／ 楽天ペイ ／ d払い ／ au PAY</p>
+                <p class="panel-note">※ QRコードは <strong>仮</strong> です。各サービスで発行したコードに差し替えてください。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 仮想通貨 -->
+          <div class="method-panel" data-method="crypto" hidden>
+            <p class="panel-lead">暗号資産（仮想通貨）でのご寄付も受け付けます。下記アドレス宛にお送りください。</p>
+            <dl class="kv-table">
+              <div><dt>Bitcoin (BTC)</dt><dd class="mono">bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx（仮）</dd></div>
+              <div><dt>Ethereum (ETH)</dt><dd class="mono">0xABCD0000000000000000000000000000000000（仮）</dd></div>
+              <div><dt>USDT (ERC-20)</dt><dd class="mono">0xABCD0000000000000000000000000000000000（仮）</dd></div>
+            </dl>
+            <p class="panel-note">
+              ※ アドレスはすべて <strong>仮（サンプル）</strong> です。送金前に必ず最新の正式アドレスをご確認ください。<br />
+              ※ 暗号資産の受領・換金・会計・税務および関連法令の取扱いは、財団側で別途ご確認ください。
             </p>
+          </div>
+
+          <!-- コンビニ・キャリア決済 -->
+          <div class="method-panel" data-method="konbini" hidden>
+            <p class="panel-lead">コンビニ店頭およびキャリア決済でのお支払いに対応予定です。</p>
+            <dl class="kv-table">
+              <div><dt>コンビニ</dt><dd>セブン-イレブン／ローソン／ファミリーマート 等（仮）</dd></div>
+              <div><dt>キャリア決済</dt><dd>d払い／au かんたん決済／ソフトバンクまとめて支払い（仮）</dd></div>
+            </dl>
+            <p class="panel-note">※ 実際の稼働には決済代行（Stripe／KOMOJU 等）との連携が必要です。お申込み後に払込票番号をご案内します（仮）。</p>
+          </div>
+
+          <!-- 寄付プラットフォーム経由 -->
+          <div class="method-panel" data-method="platform" hidden>
+            <p class="panel-lead">外部の寄付プラットフォーム経由でもご寄付いただけます（領収書発行・寄付者管理に対応）。</p>
+            <div class="platform-links">
+              <a class="btn btn-outline" href="#" target="_blank" rel="noopener noreferrer">Congrant で寄付（仮）↗</a>
+              <a class="btn btn-outline" href="#" target="_blank" rel="noopener noreferrer">Syncable で寄付（仮）↗</a>
+              <a class="btn btn-outline" href="#" target="_blank" rel="noopener noreferrer">Yahoo!ネット募金（仮）↗</a>
+            </div>
+            <p class="panel-note">※ リンク先は <strong>仮</strong> です。財団のキャンペーンページURLに差し替えてください。</p>
           </div>
         </fieldset>
 
