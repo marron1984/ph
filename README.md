@@ -1,8 +1,8 @@
 # ミンダナオ島地震 緊急支援募金サイト
 
 フィリピン・ミンダナオ島で2026年6月8日に発生したマグニチュード7.8の地震に対する
-**緊急人道支援募金サイト**です。**国際ピース・ラビング・ピープル財団
-（International Peace-Loving People Foundation / IPLPF, [iplpf.org](https://iplpf.org/)）**
+**緊急人道支援募金サイト**です。**国際 P-LP 財団
+（International Peace-Loving People Foundation / [iplpf.org](https://iplpf.org/)）**
 が運営主体となります。
 
 ## 概要
@@ -55,6 +55,10 @@ python3 -m http.server 8000
 
 ## 運営
 
-国際ピース・ラビング・ピープル財団
-International Peace-Loving People Foundation (IPLPF)
-https://iplpf.org/
+- **名称**: 一般財団法人 国際ピース・ラビング・ピープル財団（略称：国際 P-LP 財団）
+- **英語表記**: International Peace-Loving People Foundation（IPLPF）
+- **設立**: 2020年11月（設立者：長澤英男）
+- **理事長**: 前田 淳
+- **所在地**: 〒102-0093 東京都千代田区平河町2-3-10-108
+- **Web**: https://www.iplpf.org
+- **E-mail**: office@iplpf.org
