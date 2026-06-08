@@ -438,6 +438,29 @@ a { color: inherit; }
 }
 .checkbox input { margin-top: 4px; }
 
+/* bank transfer */
+.bank-details {
+  margin-top: 16px;
+  background: var(--bg-alt);
+  border: 1px dashed var(--brand);
+  border-radius: var(--radius-sm);
+  padding: 18px 18px 16px;
+}
+.bank-details[hidden] { display: none; }
+.bank-lead { margin: 0 0 12px; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+.bank-table { margin: 0; display: grid; gap: 0; }
+.bank-table > div {
+  display: grid;
+  grid-template-columns: 9.5em 1fr;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.bank-table > div:last-child { border-bottom: none; }
+.bank-table dt { margin: 0; font-size: 0.82rem; color: var(--muted); font-weight: 700; }
+.bank-table dd { margin: 0; font-weight: 700; color: var(--ink); }
+.bank-note { margin: 12px 0 0; font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+
 .donate-summary {
   display: flex;
   align-items: center;

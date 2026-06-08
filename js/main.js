@@ -59,6 +59,33 @@
     render();
   });
 
+  // お支払い方法の切替（クレジットカード / 銀行振込）
+  var bankDetails = document.getElementById("bank-details");
+  var submitBtn = document.getElementById("submit-btn");
+  var formNote = document.getElementById("form-note");
+  var methodRadios = Array.prototype.slice.call(
+    document.querySelectorAll('input[name="method"]')
+  );
+
+  function currentMethod() {
+    var checked = form.querySelector('input[name="method"]:checked');
+    return checked ? checked.value : "card";
+  }
+
+  function updateMethod() {
+    var isBank = currentMethod() === "bank";
+    bankDetails.hidden = !isBank;
+    submitBtn.textContent = isBank ? "振込で寄付を申し込む" : "寄付を確定する";
+    formNote.textContent = isBank
+      ? "銀行振込をお選びの場合は、上記口座へお振込みください。お申し込み後、確認のご連絡を差し上げます（口座情報は現在は仮の値です）。"
+      : "ボタンを押すと確認画面に進みます。これはデモ用の受付フォームです。実際の決済を有効にするには、決済事業者（Stripe／PayPal 等）との連携が必要です。";
+  }
+
+  methodRadios.forEach(function (r) {
+    r.addEventListener("change", updateMethod);
+  });
+  updateMethod();
+
   // 送信処理（デモ）
   var modal = document.getElementById("thanks-modal");
   var thanksBody = document.getElementById("thanks-body");
@@ -77,11 +104,21 @@
 
     var freq = form.querySelector('input[name="frequency"]:checked').value;
     var freqText = freq === "monthly" ? "毎月" : "今回";
-    thanksBody.textContent =
-      freqText +
-      " " +
-      yen(selectedAmount) +
-      " のご寄付ありがとうございます。あなたの支援は、ミンダナオ島地震の被災者支援に役立てられます。";
+
+    if (currentMethod() === "bank") {
+      thanksBody.textContent =
+        "お申し込みありがとうございます。" +
+        freqText +
+        " " +
+        yen(selectedAmount) +
+        " を、ご案内の口座へお振込みください（口座情報は現在は仮の値です）。お振込みの確認後、改めてご連絡いたします。";
+    } else {
+      thanksBody.textContent =
+        freqText +
+        " " +
+        yen(selectedAmount) +
+        " のご寄付ありがとうございます。あなたの支援は、ミンダナオ島地震の被災者支援に役立てられます。";
+    }
 
     openModal();
   });

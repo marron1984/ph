@@ -181,6 +181,7 @@
         </p>
         <ul class="trust-list">
           <li>運営：国際 P-LP 財団</li>
+          <li>クレジットカード・銀行振込に対応</li>
           <li>使途を限定した「ミンダナオ島地震緊急支援」への寄付</li>
           <li>SSL暗号化通信で安全に受付</li>
         </ul>
@@ -233,13 +234,39 @@
           </label>
         </fieldset>
 
+        <fieldset>
+          <legend>お支払い方法</legend>
+          <div class="toggle-group" role="group" aria-label="お支払い方法">
+            <input type="radio" name="method" id="method-card" value="card" checked />
+            <label for="method-card">クレジットカード</label>
+            <input type="radio" name="method" id="method-bank" value="bank" />
+            <label for="method-bank">銀行振込</label>
+          </div>
+
+          <div class="bank-details" id="bank-details" hidden>
+            <p class="bank-lead">下記口座へお振込みください。お振込み手数料はご負担をお願いいたします。</p>
+            <dl class="bank-table">
+              <div><dt>銀行名</dt><dd>○○銀行（仮）</dd></div>
+              <div><dt>支店名</dt><dd>○○支店（仮）</dd></div>
+              <div><dt>口座種別</dt><dd>普通（仮）</dd></div>
+              <div><dt>口座番号</dt><dd>0000000（仮）</dd></div>
+              <div><dt>口座名義</dt><dd>一般財団法人 国際ピース・ラビング・ピープル財団</dd></div>
+              <div><dt>口座名義（カナ）</dt><dd>ザイ）コクサイピースラビングピープルザイダン（仮）</dd></div>
+            </dl>
+            <p class="bank-note">
+              ※ 口座情報は <strong>仮（サンプル）</strong> です。正式な振込先が決まり次第、差し替えてください。<br />
+              ※ 振込人名義の前に整理番号などを付す運用とする場合は、確定後にこちらでご案内します。
+            </p>
+          </div>
+        </fieldset>
+
         <div class="donate-summary">
           <span>寄付金額</span>
           <strong id="summary-amount">¥5,000</strong>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg">寄付を確定する</button>
-        <p class="form-note">
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-btn">寄付を確定する</button>
+        <p class="form-note" id="form-note">
           ボタンを押すと確認画面に進みます。これはデモ用の受付フォームです。
           実際の決済を有効にするには、決済事業者（Stripe／PayPal 等）との連携が必要です。
         </p>
