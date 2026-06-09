@@ -654,15 +654,86 @@ a { color: inherit; }
   .about-layout { grid-template-columns: 1fr; gap: 28px; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
   .use-grid { grid-template-columns: repeat(2, 1fr); }
+  .mission-grid { grid-template-columns: 1fr; gap: 14px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(2) { border-right: none; }
   .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.12); }
 }
-@media (max-width: 560px) {
-  .section { padding: 56px 0; }
-  .gallery { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 600px) {
+  .container { width: min(100% - 32px, var(--container)); }
+
+  /* header */
+  .header-inner { min-height: 58px; }
+  .brand-logo { height: 32px; }
+  .nav-cta { padding: 8px 16px; font-size: 0.85rem; }
+  .alert-bar { font-size: 0.76rem; padding: 8px 14px; line-height: 1.45; }
+
+  /* hero — 高さを内容に合わせ、余白を最適化 */
+  .hero { min-height: 0; align-items: stretch; }
+  .hero-content { padding: 38px 0 42px; }
+  .hero-eyebrow { font-size: 0.74rem; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(1.5rem, 6.8vw, 2rem); margin-bottom: 14px; }
+  .hero-lead { font-size: 0.97rem; margin-bottom: 22px; }
+  .hero-actions { gap: 10px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .hero-credit { margin-top: 20px; }
+
+  /* sections */
+  .section { padding: 48px 0; }
+  .section-title { margin-bottom: 26px; }
+
+  /* stats */
+  .stat { padding: 22px 10px; }
+
+  /* gallery */
+  .gallery { gap: 12px; }
   .gallery img { height: 150px; }
-  .donate-card { padding: 22px; }
+
+  /* use cards */
+  .use-grid { gap: 14px; }
+  .use-card { padding: 22px 16px; }
+
+  /* donate — タップしやすく */
+  .donate-card { padding: 20px; }
+  .donate-card fieldset { margin-bottom: 22px; }
   .amount-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero { min-height: 90vh; }
+  .amount-btn { padding: 16px 6px; }
+  .toggle-group label { padding: 12px; }
+  .donate-summary { padding: 16px; }
+  .donate-summary strong { font-size: 1.3rem; }
+
+  /* 支払い方法チップは2列で大きめのタップ領域に */
+  .method-grid { gap: 8px; }
+  .method-grid label { flex: 1 1 calc(50% - 4px); justify-content: center; padding: 12px 8px; }
+
+  /* 口座・アドレス表は縦積みに（ラベル→値） */
+  .method-panel { padding: 16px; }
+  .kv-table > div { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
+  .kv-table dt { font-size: 0.74rem; }
+  .kv-table dd.mono { font-size: 0.8rem; }
+
+  /* QR・プラットフォームは縦積み */
+  .qr-row { flex-direction: column; align-items: stretch; text-align: center; }
+  .qr-box { margin: 0 auto; }
+  .platform-links { flex-direction: column; }
+  .platform-links .btn { width: 100%; }
+
+  /* about */
+  .about-card { padding: 22px; }
+
+  /* footer */
+  .footer-logo { height: 46px; padding: 8px 14px; }
+  .footer-nav { gap: 16px 18px; }
+
+  /* modal */
+  .modal { padding: 16px; }
+  .modal-card { padding: 32px 22px 26px; }
 }
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 1.42rem; }
+  .method-grid label { font-size: 0.8rem; padding: 11px 6px; }
+  .stat-num { font-size: 1.3rem; }
+}
+
