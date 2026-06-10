@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -43,23 +43,32 @@
 
   <!-- ヒーロー -->
   <section class="hero" id="top">
-    <div class="hero-media">
-      <img src="assets/images/damage-jollibee.jpeg" alt="ミンダナオ島の地震で倒壊した建物" />
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="container hero-content">
-      <p class="hero-eyebrow">緊急人道支援募金</p>
-      <h1>フィリピン・ミンダナオ島地震<br />被災された方々に、いま支援を。</h1>
-      <p class="hero-lead">
-        2026年6月8日、フィリピン南部ミンダナオ島沖でマグニチュード8.2の地震が発生し、
-        沿岸部には津波警報が出されました。建物の倒壊や負傷者が報告されています。
-        あなたのご寄付が、水・食料・避難所・医療といった命をつなぐ支援になります。
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" href="#donate">いますぐ寄付する</a>
-        <a class="btn btn-ghost btn-lg" href="#situation">被害状況を見る</a>
+    <span class="hero-blob hero-blob-1" aria-hidden="true"></span>
+    <span class="hero-blob hero-blob-2" aria-hidden="true"></span>
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <p class="hero-eyebrow">🤝 いっしょに、ミンダナオへ</p>
+        <h1>その手で、<br />被災した人に<br />あたたかさを。</h1>
+        <p class="hero-lead">
+          2026年6月8日、フィリピン・ミンダナオ島を大きな地震が襲いました。
+          水・食料・避難所・医療——あなたのやさしさが、いま必要としている人に届きます。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#donate">♡ 寄付してささえる</a>
+          <a class="btn btn-soft btn-lg" href="#situation">被害状況を見る</a>
+        </div>
+        <p class="hero-trust">運営：国際 P-LP 財団が責任をもってお届けします</p>
       </div>
-      <p class="hero-credit">写真：現地で撮影された地震被害の様子</p>
+      <div class="hero-figure">
+        <div class="hero-photo">
+          <img src="assets/images/damage-jollibee.jpeg" alt="ミンダナオ島の地震で倒壊した建物" />
+        </div>
+        <div class="hero-chip hero-chip-quake">
+          <span class="hero-chip-num">M8.2</span>
+          <small>ミンダナオ島地震</small>
+        </div>
+        <div class="hero-chip hero-chip-heart" aria-hidden="true">♡</div>
+      </div>
     </div>
   </section>
 
@@ -449,7 +458,7 @@
   </section>
 
   <!-- 財団について -->
-  <section class="section section-alt" id="about">
+  <section class="section" id="about">
     <div class="container">
       <p class="section-eyebrow">運営団体</p>
       <h2 class="section-title">国際 P-LP 財団について</h2>
@@ -539,7 +548,7 @@
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
       <button class="modal-close" data-close aria-label="閉じる">×</button>
-      <div class="modal-icon" aria-hidden="true">💚</div>
+      <div class="modal-icon" aria-hidden="true">🧡</div>
       <h3 id="thanks-title">ご支援ありがとうございます</h3>
       <p id="thanks-body">
         あなたの温かいご寄付は、ミンダナオ島地震の被災者支援に役立てられます。
