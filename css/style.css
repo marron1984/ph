@@ -156,8 +156,17 @@ h1, h2, h3, h4, .stat-num, .hero-chip-num, .section-title, .mission-title {
 .brand-logo { height: 46px; width: auto; }
 
 .site-nav { display: flex; align-items: center; gap: 26px; }
-.site-nav a { text-decoration: none; font-weight: 500; font-size: 0.92rem; color: var(--ink); }
+.site-nav a { text-decoration: none; font-weight: 500; font-size: 0.92rem; color: var(--ink); position: relative; }
 .site-nav a:hover { color: var(--primary); }
+.site-nav a:not(.nav-cta).is-active { color: var(--primary-dark); }
+.site-nav a:not(.nav-cta).is-active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 3px;
+}
 .nav-cta {
   background: linear-gradient(135deg, #f4865f, var(--primary));
   color: #fff !important;
@@ -868,6 +877,86 @@ h1, h2, h3, h4, .stat-num, .hero-chip-num, .section-title, .mission-title {
   .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .use-card, .update-card, .mission-card, .gallery img, .amount-btn { transition: none; }
   .alert-dot { animation: none; }
+}
+
+/* ===== コピー ボタン（口座・アドレス） ===== */
+.copy-btn {
+  margin-left: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--primary-dark);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+.copy-btn:hover { background: var(--primary-soft); }
+.copy-btn:active { transform: scale(0.94); }
+.copy-btn.is-done { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ===== ギャラリー ライトボックス ===== */
+.gallery figure { cursor: zoom-in; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  background: rgba(60, 50, 46, 0.88);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  animation: fade 0.2s ease forwards;
+}
+.lightbox[hidden] { display: none; }
+@keyframes fade { to { opacity: 1; } }
+.lightbox img {
+  max-width: min(100%, 1000px);
+  max-height: 78vh;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+}
+.lightbox figcaption { color: #fff; font-size: 0.92rem; font-weight: 500; }
+.lightbox-close {
+  position: absolute;
+  top: 18px; right: 20px;
+  width: 44px; height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.3); }
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.lightbox-nav:hover { background: rgba(255, 255, 255, 0.3); }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+@media (max-width: 600px) {
+  .lightbox-nav { width: 40px; height: 40px; font-size: 1.3rem; }
 }
 
 /* ===== Modal ===== */
