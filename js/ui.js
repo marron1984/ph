@@ -1,84 +1,138 @@
-/* ミンダナオ島地震 緊急支援募金 — UI演出（スクロール連動） */
+/* ミンダナオ島地震 緊急支援募金 — UI演出（Trust Blue モーションシステム） */
 (function () {
   "use strict";
 
   var reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
+  var hasIO = "IntersectionObserver" in window;
 
-  // ヘッダー：スクロールで影を付ける
+  // ── スクロール進捗バー ──────────────────────────
+  var progress = document.createElement("div");
+  progress.className = "progress-bar";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.appendChild(progress);
+
+  // ── ヘッダー影 + 進捗更新（rAFでまとめて処理） ──
   var header = document.querySelector(".site-header");
-  if (header) {
-    var onScroll = function () {
-      header.classList.toggle("is-scrolled", window.scrollY > 8);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-  }
+  var ticking = false;
+  var onScroll = function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY;
+      if (header) header.classList.toggle("is-scrolled", y > 8);
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = max > 0 ? (y / max) * 100 + "%" : "0%";
+      updateParallax(y);
+      ticking = false;
+    });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
 
-  // カード類のふわっと表示（reduced-motion時は無効）
-  if (!reduceMotion && "IntersectionObserver" in window) {
+  // ── ヒーローのパララックス ──────────────────────
+  var heroFigure = document.querySelector(".hero-figure");
+  var auroras = document.querySelectorAll(".aurora");
+  function updateParallax(y) {
+    if (reduceMotion) return;
+    if (y > 900) return;
+    if (heroFigure) {
+      heroFigure.style.transform = "translateY(" + y * 0.08 + "px)";
+    }
+    Array.prototype.forEach.call(auroras, function (a, i) {
+      var f = 0.03 + i * 0.02;
+      a.style.marginTop = y * f + "px";
+    });
+  }
+  onScroll();
+
+  // ── ふわっとリビール（タイトル・カード類、時差つき） ──
+  if (!reduceMotion && hasIO) {
     var targets = document.querySelectorAll(
-      ".stat, .use-card, .update-card, .mission-card, .gallery figure, .fact-list li, .trust-list li"
+      ".section-eyebrow, .section-title, .stat, .use-card, .update-card," +
+      ".mission-card, .gallery figure, .fact-list li, .trust-list li," +
+      ".situation-map, .about-card, .sources, .update-meta"
     );
     Array.prototype.forEach.call(targets, function (el) {
       var index = Array.prototype.indexOf.call(el.parentNode.children, el);
       el.classList.add("reveal");
-      el.style.setProperty("--reveal-delay", Math.min(index, 5) * 70 + "ms");
+      el.style.setProperty("--reveal-delay", Math.min(index, 6) * 75 + "ms");
     });
 
-    var observer = new IntersectionObserver(
+    var revealObs = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+            revealObs.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -30px 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -36px 0px" }
     );
     Array.prototype.forEach.call(targets, function (el) {
-      observer.observe(el);
+      revealObs.observe(el);
+    });
+  } else {
+    // 低減設定時もタイトル下線は表示
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".section-title"),
+      function (el) { el.classList.add("is-visible"); }
+    );
+  }
+
+  // ── 3Dチルト（ヒーロー写真・寄付カード / ホバー環境のみ） ──
+  if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    var tiltTargets = document.querySelectorAll(".hero-photo, .donate-card");
+    Array.prototype.forEach.call(tiltTargets, function (el) {
+      var strength = el.classList.contains("donate-card") ? 3 : 6;
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        var rx = ((e.clientY - r.top) / r.height - 0.5) * -strength;
+        var ry = ((e.clientX - r.left) / r.width - 0.5) * strength;
+        el.style.transform =
+          "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg)";
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.transform = "";
+      });
     });
   }
 
-  // モバイル用フローティング寄付ボタン：寄付セクション表示中は隠す
-  var floatCta = document.getElementById("float-cta");
-  var donateSection = document.getElementById("donate");
-  if (floatCta && donateSection && "IntersectionObserver" in window) {
-    var ctaObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          floatCta.classList.toggle("is-hidden", entry.isIntersecting);
-        });
-      },
-      { threshold: 0.05 }
-    );
-    ctaObserver.observe(donateSection);
+  // ── ボタンのクリックリップル ────────────────────
+  if (!reduceMotion) {
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest(".btn");
+      if (!btn) return;
+      var r = btn.getBoundingClientRect();
+      var d = Math.max(r.width, r.height);
+      var span = document.createElement("span");
+      span.className = "ripple";
+      span.style.width = span.style.height = d + "px";
+      span.style.left = e.clientX - r.left - d / 2 + "px";
+      span.style.top = e.clientY - r.top - d / 2 + "px";
+      btn.appendChild(span);
+      setTimeout(function () { span.remove(); }, 600);
+    });
   }
 
-  // 数字のカウントアップ（統計バンド）
+  // ── 数字のカウントアップ（統計バンド） ─────────────
   (function countUp() {
     var nums = document.querySelectorAll(".stat-num");
-    if (!nums.length || !("IntersectionObserver" in window)) return;
+    if (!nums.length || !hasIO || reduceMotion) return;
 
     var animate = function (el) {
       var raw = el.textContent.trim();
       var m = raw.match(/^([^\d.]*)([\d.]+)(.*)$/);
       if (!m) return;
       var prefix = m[1], target = parseFloat(m[2]), suffix = m[3];
-      if (reduceMotion) {
-        return;
-      }
       var decimals = (m[2].split(".")[1] || "").length;
-      var start = null, dur = 1100;
+      var start = null, dur = 1200;
       var step = function (ts) {
         if (start === null) start = ts;
         var p = Math.min((ts - start) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
-        var val = (target * eased).toFixed(decimals);
-        el.textContent = prefix + val + suffix;
+        el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
         if (p < 1) requestAnimationFrame(step);
         else el.textContent = raw;
       };
@@ -97,12 +151,10 @@
       },
       { threshold: 0.6 }
     );
-    Array.prototype.forEach.call(nums, function (el) {
-      obs.observe(el);
-    });
+    Array.prototype.forEach.call(nums, function (el) { obs.observe(el); });
   })();
 
-  // ナビのスクロール連動ハイライト（スクロールスパイ）
+  // ── ナビのスクロールスパイ ──────────────────────
   (function scrollSpy() {
     var links = Array.prototype.slice.call(
       document.querySelectorAll('.site-nav a[href^="#"]')
@@ -114,7 +166,7 @@
       if (sec) map[id] = a;
     });
     var ids = Object.keys(map);
-    if (!ids.length || !("IntersectionObserver" in window)) return;
+    if (!ids.length || !hasIO) return;
 
     var visible = {};
     var obs = new IntersectionObserver(
@@ -133,14 +185,29 @@
           a.classList.toggle("is-active", best !== null && a === map[best]);
         });
       },
-      { threshold: [0.15, 0.5, 0.85], rootMargin: "-86px 0px -45% 0px" }
+      { threshold: [0.15, 0.5, 0.85], rootMargin: "-88px 0px -45% 0px" }
     );
     ids.forEach(function (id) {
       obs.observe(document.getElementById(id));
     });
   })();
 
-  // ギャラリーのライトボックス
+  // ── モバイル用フローティングCTA ───────────────────
+  var floatCta = document.getElementById("float-cta");
+  var donateSection = document.getElementById("donate");
+  if (floatCta && donateSection && hasIO) {
+    var ctaObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          floatCta.classList.toggle("is-hidden", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.05 }
+    );
+    ctaObserver.observe(donateSection);
+  }
+
+  // ── ギャラリーのライトボックス ────────────────────
   (function lightbox() {
     var figures = Array.prototype.slice.call(
       document.querySelectorAll(".gallery figure")
@@ -150,7 +217,11 @@
     var items = figures.map(function (fig) {
       var img = fig.querySelector("img");
       var cap = fig.querySelector("figcaption");
-      return { src: img ? img.src : "", alt: img ? img.alt : "", cap: cap ? cap.textContent : "" };
+      return {
+        src: img ? img.src : "",
+        alt: img ? img.alt : "",
+        cap: cap ? cap.textContent : ""
+      };
     });
 
     var box = document.createElement("div");
@@ -163,7 +234,7 @@
       '<button class="lightbox-nav lightbox-prev" aria-label="前へ">‹</button>' +
       '<button class="lightbox-nav lightbox-next" aria-label="次へ">›</button>' +
       '<img alt="" />' +
-      '<figcaption></figcaption>';
+      "<figcaption></figcaption>";
     document.body.appendChild(box);
 
     var bImg = box.querySelector("img");
@@ -192,7 +263,10 @@
       fig.setAttribute("tabindex", "0");
       fig.addEventListener("click", function () { open(i); });
       fig.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(i);
+        }
       });
     });
 
@@ -210,7 +284,7 @@
     });
   })();
 
-  // 口座・アドレスのコピー
+  // ── 口座・アドレスのコピー ──────────────────────
   (function copyButtons() {
     var cells = document.querySelectorAll(
       '.method-panel[data-method="bank"] .kv-table dd,' +
@@ -230,8 +304,12 @@
         ta.style.opacity = "0";
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand("copy"); resolve(); }
-        catch (err) { reject(err); }
+        try {
+          document.execCommand("copy");
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
         document.body.removeChild(ta);
       });
     };

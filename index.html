@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -43,21 +43,30 @@
 
   <!-- ヒーロー -->
   <section class="hero" id="top">
-    <span class="hero-blob hero-blob-1" aria-hidden="true"></span>
-    <span class="hero-blob hero-blob-2" aria-hidden="true"></span>
+    <div class="hero-bg" aria-hidden="true">
+      <span class="aurora aurora-1"></span>
+      <span class="aurora aurora-2"></span>
+      <span class="aurora aurora-3"></span>
+      <span class="hero-grid"></span>
+    </div>
     <div class="container hero-inner">
       <div class="hero-content">
-        <p class="hero-eyebrow">🤝 いっしょに、ミンダナオへ</p>
-        <h1>その手で、<br />被災した人に<br />あたたかさを。</h1>
+        <p class="hero-eyebrow"><span class="shield" aria-hidden="true">🛡️</span> 国際 P-LP 財団 公式・緊急支援募金</p>
+        <h1><span class="line">確かなルートで、</span><br /><span class="line">ミンダナオへ</span><br /><span class="line">支援を届ける。</span></h1>
         <p class="hero-lead">
-          2026年6月8日、フィリピン・ミンダナオ島を大きな地震が襲いました。
-          水・食料・避難所・医療——あなたのやさしさが、いま必要としている人に届きます。
+          2026年6月8日、フィリピン・ミンダナオ島をM8.2の大地震が襲いました。
+          一般財団法人 国際P-LP財団が、皆さまのご寄付を責任をもって
+          現地の救援・復興支援へつなぎます。
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary btn-lg" href="#donate">♡ 寄付してささえる</a>
-          <a class="btn btn-soft btn-lg" href="#situation">被害状況を見る</a>
+          <a class="btn btn-primary btn-lg" href="#donate">いますぐ寄付する</a>
+          <a class="btn btn-ghost btn-lg" href="#situation">被害状況を見る</a>
         </div>
-        <p class="hero-trust">運営：国際 P-LP 財団が責任をもってお届けします</p>
+        <ul class="hero-trust" role="list">
+          <li>一般財団法人が運営</li>
+          <li>使途を限定して管理</li>
+          <li>SSL暗号化で保護</li>
+        </ul>
       </div>
       <div class="hero-figure">
         <div class="hero-photo">
@@ -65,9 +74,11 @@
         </div>
         <div class="hero-chip hero-chip-quake">
           <span class="hero-chip-num">M8.2</span>
-          <small>ミンダナオ島地震</small>
+          <small>2026.6.8 発生</small>
         </div>
-        <div class="hero-chip hero-chip-heart" aria-hidden="true">♡</div>
+        <div class="hero-chip hero-chip-verified">
+          <span class="check" aria-hidden="true">✓</span> 公式募金
+        </div>
       </div>
     </div>
   </section>
@@ -545,7 +556,7 @@
 
   <!-- モバイル用フローティング寄付ボタン -->
   <div class="float-cta" id="float-cta">
-    <a class="btn btn-primary btn-lg" href="#donate">♡ 寄付してささえる</a>
+    <a class="btn btn-primary btn-lg" href="#donate">🛡️ 安心して寄付する</a>
   </div>
 
   <!-- 完了モーダル -->
@@ -553,7 +564,7 @@
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
       <button class="modal-close" data-close aria-label="閉じる">×</button>
-      <div class="modal-icon" aria-hidden="true">🧡</div>
+      <div class="modal-icon" aria-hidden="true">🤝</div>
       <h3 id="thanks-title">ご支援ありがとうございます</h3>
       <p id="thanks-body">
         あなたの温かいご寄付は、ミンダナオ島地震の被災者支援に役立てられます。
