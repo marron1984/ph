@@ -81,6 +81,7 @@ python3 -m http.server 8000
 - **英語表記**: International Peace-Loving People Foundation（IPLPF）
 - **設立**: 2020年11月（設立者：長澤英男）
 - **理事長**: 前田 淳
+- **副理事長**: 松田 明仁（防災士）
 - **所在地**: 〒102-0093 東京都千代田区平河町2-3-10-108
 - **Web**: https://www.iplpf.org
 - **E-mail**: office@iplpf.org
