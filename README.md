@@ -18,13 +18,33 @@
 
 ```
 .
-├── index.html          # メインページ
+├── index.html          # メインページ（日本語）
+├── en.html             # 英語ページ（海外SNS向け share 文言・WhatsApp対応）
+├── report.html         # 活動報告・ご芳名ページ
+├── admin.html          # 振込番号 管理画面
 ├── css/style.css       # スタイル（Trust Blue デザインシステム）
-├── js/main.js          # 寄付フォームの制御
+├── js/main.js          # 寄付フォームの制御（window.PLP_TEXTS で文言差し替え可）
 ├── js/ui.js            # モーション・UI演出
+├── js/share.js         # SNSシェア（X/Facebook/LINE/WhatsApp/コピー/端末共有）
+├── js/report.js        # ご芳名の表示
+├── js/admin.js         # 管理画面
 ├── assets/images/      # 財団ロゴ
 └── README.md
 ```
+
+## 英語ページ（en.html）
+
+海外からの支援・拡散を想定した英語版ページです。
+
+- 全セクションを英訳（状況・使途・寄付方法・団体情報・シェア）
+- ヘッダー／フッターで **日本語 ⇄ English** を相互リンク（hreflang 設定済み）
+- フォームの動的文言（金額の使いみど・振込番号・完了メッセージ等）は
+  `window.PLP_TEXTS` により英語化（ロジックは日本語版と共通）
+- SNSシェアは英語圏向けに **X / Facebook / WhatsApp** 構成。
+  シェア文言は `body data-share-text` のハッシュタグ付き英文
+  （#KumamotoEarthquake #Japan #DisasterRelief）
+- 海外送金は SWIFT 等の確認が必要なため「国外からの送金は
+  office@iplpf.org へお問い合わせください」と案内
 
 ## 被災地写真について
 

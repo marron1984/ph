@@ -5,6 +5,9 @@
   var form = document.getElementById("donation-form");
   if (!form) return;
 
+  // ページ側で window.PLP_TEXTS を定義すると文言を差し替え可能（英語ページ用）
+  var T = window.PLP_TEXTS || {};
+
   var amountButtons = Array.prototype.slice.call(
     document.querySelectorAll(".amount-btn")
   );
@@ -20,6 +23,7 @@
 
   // 寄付額に応じた支援イメージ
   function impactMessage(amount) {
+    if (T.impact) return T.impact(amount);
     if (!amount || amount < 100) return "";
     if (amount < 3000) return "被災者へ清潔な飲料水を届けられます。";
     if (amount < 5000) return "1家族分の食料・衛生用品を支援できます。";
@@ -136,7 +140,7 @@
     e.preventDefault();
 
     if (!selectedAmount || selectedAmount < 100) {
-      alert("寄付金額を選択するか、100円以上の金額を入力してください。");
+      alert(T.amountAlert || "寄付金額を選択するか、100円以上の金額を入力してください。");
       return;
     }
     if (!form.checkValidity()) {
@@ -144,12 +148,12 @@
       return;
     }
     if (!currentCode) {
-      alert("お名前とメールアドレスを入力すると振込番号が発行されます。ご確認ください。");
+      alert(T.codeAlert || "お名前とメールアドレスを入力すると振込番号が発行されます。ご確認ください。");
       return;
     }
 
     var freq = form.querySelector('input[name="frequency"]:checked').value;
-    var freqText = freq === "monthly" ? "毎月" : "今回";
+    var freqText = freq === "monthly" ? (T.monthly || "毎月") : (T.once || "今回");
 
     // 申込記録をこの端末に保存（管理画面 admin.html で一覧表示）
     try {
@@ -167,7 +171,8 @@
       localStorage.setItem(KEY, JSON.stringify(records));
     } catch (err) { /* ストレージ不可でも申込は継続 */ }
 
-    thanksBody.textContent =
+    var anonChecked = document.getElementById("anonymous").checked;
+    thanksBody.textContent = T.thanks ? T.thanks(currentCode, freqText, yen(selectedAmount), anonChecked) :
       "お申し込みありがとうございます。あなたの振込番号は「" +
       currentCode +
       "」です。" +
@@ -179,7 +184,7 @@
       "振込人名義の先頭に振込番号をご入力ください（例：" +
       currentCode +
       " ヤマダ タロウ）。" +
-      (document.getElementById("anonymous").checked
+      (anonChecked
         ? ""
         : "ご入金の確認後、活動報告ページにお名前を掲載させていただきます。");
 

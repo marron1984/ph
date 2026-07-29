@@ -2,6 +2,7 @@
 (function () {
   "use strict";
 
+  var T = window.PLP_TEXTS || {};
   var reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
@@ -320,13 +321,13 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "copy-btn";
-      btn.textContent = "コピー";
+      btn.textContent = T.copy || "コピー";
       btn.addEventListener("click", function () {
         copyText(value).then(function () {
-          btn.textContent = "コピーしました";
+          btn.textContent = T.copied || "コピーしました";
           btn.classList.add("is-done");
           setTimeout(function () {
-            btn.textContent = "コピー";
+            btn.textContent = T.copy || "コピー";
             btn.classList.remove("is-done");
           }, 1600);
         });

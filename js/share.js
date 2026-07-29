@@ -3,7 +3,8 @@
   "use strict";
 
   var url = location.href.split("#")[0];
-  var text = document.title;
+  // SNS向け文言はページ側で上書き可能（body data-share-text）
+  var text = document.body.getAttribute("data-share-text") || document.title;
 
   var intents = {
     x:
@@ -18,7 +19,10 @@
       "https://social-plugins.line.me/lineit/share?url=" +
       encodeURIComponent(url) +
       "&text=" +
-      encodeURIComponent(text)
+      encodeURIComponent(text),
+    whatsapp:
+      "https://api.whatsapp.com/send?text=" +
+      encodeURIComponent(text + " " + url)
   };
 
   // シェアリンクを設定（小窓で開く）
