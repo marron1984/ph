@@ -1,5 +1,5 @@
 /* =====================================================
-   ミンダナオ島地震 緊急支援募金 — Trust Blue Design System
+   令和8年熊本地震 緊急支援募金 — Trust Blue Design System
    安心・安全・信頼 × アグレッシブモーション
    ===================================================== */
 
@@ -398,6 +398,55 @@ a { color: inherit; }
 }
 @keyframes photoIn { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: none; } }
 .hero-photo img { width: 100%; height: 420px; object-fit: cover; }
+
+/* ヒーロー：災害データカード */
+.hero-panel {
+  background: rgba(255, 255, 255, 0.97);
+  color: var(--ink);
+  padding: 28px 30px;
+}
+.hero-panel-title {
+  margin: 0 0 4px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.hero-panel-big {
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--navy-900);
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--line);
+}
+.hero-panel-big span {
+  font-size: 2.6rem;
+  color: var(--danger);
+  line-height: 1;
+  margin-left: 4px;
+}
+.hero-panel-list { margin: 0; display: grid; gap: 0; }
+.hero-panel-list > div {
+  display: grid;
+  grid-template-columns: 4.5em 1fr;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.hero-panel-list > div:last-child { border-bottom: none; }
+.hero-panel-list dt {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+.hero-panel-list dd {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
 
 .hero-chip {
   position: absolute;

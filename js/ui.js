@@ -1,4 +1,4 @@
-/* ミンダナオ島地震 緊急支援募金 — UI演出（Trust Blue モーションシステム） */
+/* 令和8年熊本地震 緊急支援募金 — UI演出（Trust Blue モーションシステム） */
 (function () {
   "use strict";
 
