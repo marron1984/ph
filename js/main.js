@@ -150,6 +150,23 @@
 
     var freq = form.querySelector('input[name="frequency"]:checked').value;
     var freqText = freq === "monthly" ? "毎月" : "今回";
+
+    // 申込記録をこの端末に保存（管理画面 admin.html で一覧表示）
+    try {
+      var KEY = "plp_kifu_records";
+      var records = JSON.parse(localStorage.getItem(KEY) || "[]");
+      records.push({
+        t: Date.now(),
+        code: currentCode,
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        amount: selectedAmount,
+        freq: freq,
+        anon: document.getElementById("anonymous").checked
+      });
+      localStorage.setItem(KEY, JSON.stringify(records));
+    } catch (err) { /* ストレージ不可でも申込は継続 */ }
+
     thanksBody.textContent =
       "お申し込みありがとうございます。あなたの振込番号は「" +
       currentCode +

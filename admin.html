@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振込番号 管理画面 | 令和8年熊本地震 義援金受付</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* 管理画面専用の追加スタイル */
+    .admin-header {
+      background: linear-gradient(160deg, var(--navy-900), var(--navy-950));
+      color: #fff;
+      padding: 26px 0;
+    }
+    .admin-header-inner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .admin-header .footer-logo { height: 46px; }
+    .admin-header h1 { margin: 0; font-size: 1.25rem; font-weight: 900; }
+    .admin-header small { display: block; font-weight: 500; color: rgba(255,255,255,0.7); font-size: 0.8rem; }
+    .admin-header .btn { margin-left: auto; }
+
+    .admin-main { padding: 40px 0 80px; }
+    .admin-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      margin-bottom: 26px;
+    }
+    .admin-card h2 {
+      margin: 0 0 6px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--navy-900);
+    }
+    .admin-card .sub { margin: 0 0 18px; font-size: 0.85rem; color: var(--muted); }
+
+    .admin-toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .admin-toolbar input[type="search"] {
+      flex: 1 1 240px;
+      padding: 11px 14px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .admin-toolbar input[type="search"]:focus { outline: none; border-color: var(--brand); }
+    .admin-toolbar .btn { padding: 10px 18px; font-size: 0.88rem; }
+    .btn-danger { background: #fff; color: var(--danger); border-color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .admin-stats { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 16px; }
+    .admin-stat {
+      background: var(--brand-soft);
+      border-radius: var(--radius-sm);
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .admin-stat strong { display: block; font-size: 1.3rem; color: var(--brand); font-weight: 900; }
+
+    .table-wrap { overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 720px; }
+    .admin-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--bg-alt);
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .admin-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .admin-table .code {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-weight: 900;
+      color: var(--brand);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .admin-table .num { text-align: right; white-space: nowrap; }
+    .admin-table .del {
+      background: none; border: none; color: var(--danger);
+      cursor: pointer; font-size: 0.8rem; font-weight: 700; font-family: inherit;
+    }
+    .admin-table .del:hover { text-decoration: underline; }
+    .tag { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+    .tag-monthly { background: var(--teal-soft); color: var(--teal-dark); }
+    .tag-once { background: var(--brand-soft); color: var(--brand); }
+    .tag-anon { background: #f2e8d9; color: #8a6d3b; }
+
+    .empty { padding: 30px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .calc-grid label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; color: var(--navy-900); }
+    .calc-grid input[type="email"], .calc-grid textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    .calc-grid textarea { min-height: 120px; resize: vertical; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; }
+    .calc-grid input:focus, .calc-grid textarea:focus { outline: none; border-color: var(--brand); }
+    .calc-result {
+      margin-top: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      min-height: 1.5em;
+    }
+    .calc-result .code { color: var(--brand); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.3rem; letter-spacing: 2px; }
+
+    .warn {
+      background: #fdf6e3;
+      border: 1px solid #f2d891;
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      font-size: 0.84rem;
+      color: #7a5c1e;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 720px) {
+      .calc-grid { grid-template-columns: 1fr; }
+      .admin-header .btn { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <img class="footer-logo" src="assets/images/logo.png" alt="国際 P-LP 財団" />
+      <div>
+        <h1>振込番号 管理画面</h1>
+        <small>令和8年熊本地震 義援金受付 ― 国際 P-LP 財団</small>
+      </div>
+      <a class="btn btn-ghost" href="index.html">← 募金サイトへ戻る</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="container">
+
+      <!-- 受付リスト -->
+      <section class="admin-card">
+        <h2>受付リスト（この端末で発行された振込番号）</h2>
+        <p class="sub">寄付フォームで「振込での寄付を申し込む」まで完了した申込が、この端末のブラウザに記録されます。</p>
+
+        <div class="admin-stats">
+          <div class="admin-stat"><strong id="stat-count">0</strong>受付件数</div>
+          <div class="admin-stat"><strong id="stat-total">¥0</strong>申込金額 合計</div>
+        </div>
+
+        <div class="admin-toolbar">
+          <input type="search" id="search" placeholder="検索：振込番号・お名前・メールアドレス" />
+          <button type="button" class="btn btn-outline" id="export-csv">CSVエクスポート</button>
+          <button type="button" class="btn btn-danger" id="clear-all">全件削除</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="admin-table" id="records-table">
+            <thead>
+              <tr>
+                <th>受付日時</th>
+                <th>振込番号</th>
+                <th>お名前</th>
+                <th>メールアドレス</th>
+                <th class="num">金額</th>
+                <th>種別</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+          <p class="empty" id="records-empty">まだ受付記録がありません。寄付フォームから申込があると、ここに表示されます。</p>
+        </div>
+      </section>
+
+      <!-- 番号計算ツール -->
+      <section class="admin-card">
+        <h2>振込番号 照合ツール</h2>
+        <p class="sub">
+          振込番号はメールアドレスから一意に計算されます。申込記録がない場合でも、
+          メールアドレスが分かれば同じ番号を再計算して照合できます。
+        </p>
+        <div class="calc-grid">
+          <div>
+            <label for="calc-email">1件ずつ照合（メールアドレス）</label>
+            <input type="email" id="calc-email" placeholder="taro@example.com" />
+            <p class="calc-result" id="calc-result"></p>
+          </div>
+          <div>
+            <label for="calc-bulk">まとめて照合（1行につき「お名前,メールアドレス」）</label>
+            <textarea id="calc-bulk" placeholder="山田 太郎,taro@example.com&#10;佐藤 花子,hanako@example.com"></textarea>
+            <div class="admin-toolbar" style="margin-top:10px">
+              <button type="button" class="btn btn-primary" id="calc-bulk-run">番号を計算</button>
+              <button type="button" class="btn btn-outline" id="calc-bulk-csv" hidden>結果をCSVで保存</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap" id="bulk-wrap" hidden>
+          <table class="admin-table" id="bulk-table">
+            <thead>
+              <tr><th>お名前</th><th>メールアドレス</th><th>振込番号</th></tr>
+            </thead>
+            <tbody id="bulk-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 注意 -->
+      <section class="warn">
+        <strong>ご利用上の注意</strong><br />
+        ・受付リストは <strong>申込者が操作したブラウザ（端末）ごと</strong> に保存されます。別の端末からの申込はこの一覧には届きません。
+        全端末の申込を一元管理するには、フォーム送信先（サーバーやフォームサービス）の追加が必要です。<br />
+        ・このページには認証がありません。公開サーバーに設置する場合は、Basic認証などのアクセス制限を必ずかけてください。
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
