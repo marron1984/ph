@@ -357,6 +357,18 @@
             <input type="checkbox" id="anonymous" name="anonymous" />
             <span>匿名で寄付する（公開の謝辞にお名前を掲載しません）</span>
           </label>
+
+          <div class="transfer-code" id="transfer-code" hidden>
+            <p class="transfer-code-label">あなたの振込番号</p>
+            <p class="transfer-code-num"><span id="transfer-code-num">------</span><button type="button" class="copy-btn" id="transfer-code-copy">コピー</button></p>
+            <p class="transfer-code-note">
+              お振込みの際、<strong>振込人名義の先頭にこの番号</strong>をご入力ください。<br />
+              例：<strong><span id="transfer-code-example">123456</span> ヤマダ タロウ</strong>
+            </p>
+          </div>
+          <p class="transfer-code-hint" id="transfer-code-hint">
+            お名前とメールアドレスをご入力いただくと、照合用の「振込番号」が発行されます。
+          </p>
         </fieldset>
 
         <fieldset>
@@ -370,7 +382,7 @@
               <div><dt>口座番号</dt><dd>1576120</dd></div>
               <div><dt>口座名義</dt><dd>一般財団法人　国際ピースラビングピープル財団義援金受付</dd></div>
             </dl>
-            <p class="panel-note">※ お振込みの際は、下のお名前と同じ振込人名義でお手続きいただくと照合がスムーズです。</p>
+            <p class="panel-note">※ 上で発行される「振込番号」を、振込人名義の先頭にご入力ください（例：123456 ヤマダ タロウ）。</p>
           </div>
         </fieldset>
 

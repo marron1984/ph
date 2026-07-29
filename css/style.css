@@ -1034,6 +1034,51 @@ a { color: inherit; }
 .donate-summary strong { font-size: 1.6rem; font-weight: 900; color: var(--brand); }
 .form-note { font-size: 0.78rem; color: var(--muted); margin: 14px 0 0; }
 
+/* 振込番号 */
+.transfer-code {
+  margin-top: 18px;
+  padding: 20px 22px;
+  background: linear-gradient(135deg, var(--brand-soft), var(--teal-soft));
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-sm);
+  animation: panelIn 0.4s var(--ease-spring);
+}
+.transfer-code[hidden] { display: none; }
+.transfer-code-label {
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--brand);
+}
+.transfer-code-num {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+.transfer-code-num span {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--navy-900);
+  line-height: 1.2;
+}
+.transfer-code-note {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--ink);
+  line-height: 1.7;
+}
+.transfer-code-note strong { color: var(--brand); }
+.transfer-code-hint {
+  margin: 14px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.transfer-code-hint[hidden] { display: none; }
+
 /* コピー ボタン */
 .copy-btn {
   margin-left: 8px;
