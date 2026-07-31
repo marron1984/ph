@@ -21,4 +21,4 @@
  *   （https://script.google.com/macros/s/…/exec）を設定してください。
  *   スプレッドシートのURLそのものでは受信できません。
  */
-window.PLP_SUBMIT_URL = "https://script.google.com/a/macros/aska-g.com/s/AKfycbxJfoShN84G92qm3uRkpks61h6TgTO3Q7OVhsiSYRbBAZq3It10oVupmanfXQ_7kuWc_w/exec";
+window.PLP_SUBMIT_URL = "https://script.google.com/macros/s/AKfycbxJfoShN84G92qm3uRkpks61h6TgTO3Q7OVhsiSYRbBAZq3It10oVupmanfXQ_7kuWc_w/exec";
