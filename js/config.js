@@ -15,4 +15,10 @@
  * 空文字("")のままの場合は送信されず、従来どおり申込者の端末への保存
  * （admin.html の受付リスト）のみ行われます。
  */
+/* 保存先スプレッドシート（財団運用）:
+ * https://docs.google.com/spreadsheets/d/1KKsPa_qCoJkLxvHuKL2auBC9rq2A-5ip1N4SFnnFWJM/edit
+ * ※ 下記には上記シートに紐づく Apps Script の「ウェブアプリURL」
+ *   （https://script.google.com/macros/s/…/exec）を設定してください。
+ *   スプレッドシートのURLそのものでは受信できません。
+ */
 window.PLP_SUBMIT_URL = "";

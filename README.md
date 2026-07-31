@@ -119,11 +119,18 @@ python3 -m http.server 8000
 ```javascript
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["受付日時", "振込番号", "お名前", "メールアドレス", "金額", "匿名希望", "ページ"]);
+  }
   var p = e.parameter;
-  sheet.appendRow([new Date(), p.code, p.name, p.email, p.amount, p.anonymous, p.page]);
+  sheet.appendRow([new Date(), p.code, p.name, p.email, p.amount,
+                   p.anonymous === "yes" ? "はい" : "", p.page]);
   return ContentService.createTextOutput("ok");
 }
 ```
+
+> 運用中のスプレッドシート:
+> https://docs.google.com/spreadsheets/d/1KKsPa_qCoJkLxvHuKL2auBC9rq2A-5ip1N4SFnnFWJM/edit
 
 3. 「デプロイ → 新しいデプロイ → ウェブアプリ」
    （実行ユーザー: 自分／アクセス: 全員）で公開
