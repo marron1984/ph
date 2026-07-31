@@ -221,16 +221,6 @@
 
       <form class="donate-card" id="donation-form" novalidate>
         <fieldset>
-          <legend>Donation type</legend>
-          <div class="toggle-group" role="group" aria-label="Donation type">
-            <input type="radio" name="frequency" id="freq-once" value="once" checked />
-            <label for="freq-once">One-time</label>
-            <input type="radio" name="frequency" id="freq-monthly" value="monthly" />
-            <label for="freq-monthly">Monthly</label>
-          </div>
-        </fieldset>
-
-        <fieldset>
           <legend>Amount (Japanese yen)</legend>
           <div class="amount-grid" role="group" aria-label="Amount">
             <button type="button" class="amount-btn" data-amount="1000">¥1,000</button>
@@ -433,16 +423,14 @@
   <script>
     // 英語ページ用の文言（main.js / ui.js が参照）
     window.PLP_TEXTS = {
-      once: "one-time",
-      monthly: "monthly",
       copy: "Copy",
       copied: "Copied!",
       amountAlert: "Please choose an amount or enter ¥100 or more.",
       codeAlert: "Enter your name and email address to receive your transfer code.",
-      thanks: function (code, freq, amount, anon) {
+      thanks: function (code, amount, anon) {
         return (
           "Thank you! Your transfer code is " + code + ". " +
-          "Please wire your " + freq + " gift of " + amount +
+          "Please wire your gift of " + amount +
           " to GMO Aozora Net Bank, Corporate Sales Branch, Ordinary account 1576120 " +
           "(Kokusai Peace-Loving People Zaidan Gienkin Uketsuke). " +
           "Put the code before your sender name (e.g., " + code + " TARO YAMADA)." +

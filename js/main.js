@@ -139,9 +139,6 @@
       return;
     }
 
-    var freq = form.querySelector('input[name="frequency"]:checked').value;
-    var freqText = freq === "monthly" ? (T.monthly || "毎月") : (T.once || "今回");
-
     // 申込記録をこの端末に保存（管理画面 admin.html で一覧表示）
     try {
       var KEY = "plp_kifu_records";
@@ -152,19 +149,16 @@
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         amount: selectedAmount,
-        freq: freq,
         anon: document.getElementById("anonymous").checked
       });
       localStorage.setItem(KEY, JSON.stringify(records));
     } catch (err) { /* ストレージ不可でも申込は継続 */ }
 
     var anonChecked = document.getElementById("anonymous").checked;
-    thanksBody.textContent = T.thanks ? T.thanks(currentCode, freqText, yen(selectedAmount), anonChecked) :
+    thanksBody.textContent = T.thanks ? T.thanks(currentCode, yen(selectedAmount), anonChecked) :
       "お申し込みありがとうございます。あなたの振込番号は「" +
       currentCode +
       "」です。" +
-      freqText +
-      " " +
       yen(selectedAmount) +
       " を、GMOあおぞらネット銀行 法人営業部 普通 1576120" +
       "（一般財団法人　国際ピースラビングピープル財団義援金受付）へお振込みください。" +

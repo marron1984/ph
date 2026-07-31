@@ -67,9 +67,6 @@
         "<td>" + esc(r.name) + (r.anon ? ' <span class="tag tag-anon">匿名希望</span>' : "") + "</td>" +
         "<td>" + esc(r.email) + "</td>" +
         '<td class="num">' + yen(r.amount) + "</td>" +
-        "<td>" + (r.freq === "monthly"
-          ? '<span class="tag tag-monthly">毎月</span>'
-          : '<span class="tag tag-once">今回のみ</span>') + "</td>" +
         '<td><button type="button" class="del" data-t="' + r.t + '">削除</button></td>' +
         "</tr>";
     }).join("");
@@ -120,11 +117,10 @@
       alert("エクスポートする受付記録がありません。");
       return;
     }
-    var rows = [["受付日時", "振込番号", "お名前", "メールアドレス", "金額", "種別", "匿名希望"]];
+    var rows = [["受付日時", "振込番号", "お名前", "メールアドレス", "金額", "匿名希望"]];
     records.forEach(function (r) {
       rows.push([
         fmtDate(r.t), r.code, r.name, r.email, r.amount,
-        r.freq === "monthly" ? "毎月" : "今回のみ",
         r.anon ? "はい" : ""
       ]);
     });
