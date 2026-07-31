@@ -13,7 +13,6 @@
   );
   var customInput = document.getElementById("custom-amount");
   var summary = document.getElementById("summary-amount");
-  var impact = document.getElementById("amount-impact");
 
   var selectedAmount = 5000;
 
@@ -21,20 +20,8 @@
     return "¥" + Number(n).toLocaleString("ja-JP");
   };
 
-  // 寄付額に応じた支援イメージ
-  function impactMessage(amount) {
-    if (T.impact) return T.impact(amount);
-    if (!amount || amount < 100) return "";
-    if (amount < 3000) return "被災者へ清潔な飲料水を届けられます。";
-    if (amount < 5000) return "1家族分の食料・衛生用品を支援できます。";
-    if (amount < 10000) return "毛布や避難用品で夜の寒さから守れます。";
-    if (amount < 30000) return "1家族に一定期間の緊急支援物資を届けられます。";
-    return "避難所運営や医療支援など、より広い支援につながります。";
-  }
-
   function render() {
     summary.textContent = selectedAmount > 0 ? yen(selectedAmount) : "¥0";
-    impact.textContent = impactMessage(selectedAmount);
   }
 
   function setActiveButton(btn) {

@@ -247,7 +247,6 @@
               <input type="number" id="custom-amount" name="custom-amount" min="100" step="100" inputmode="numeric" placeholder="Enter amount" />
             </div>
           </div>
-          <p class="amount-hint" id="amount-impact"></p>
         </fieldset>
 
         <fieldset>
@@ -440,14 +439,6 @@
       copied: "Copied!",
       amountAlert: "Please choose an amount or enter ¥100 or more.",
       codeAlert: "Enter your name and email address to receive your transfer code.",
-      impact: function (a) {
-        if (!a || a < 100) return "";
-        if (a < 3000) return "Provides clean drinking water for survivors.";
-        if (a < 5000) return "Supplies food and hygiene kits for a family.";
-        if (a < 10000) return "Provides blankets and shelter goods for cold nights.";
-        if (a < 30000) return "Sustains a family with emergency supplies.";
-        return "Supports shelter operations, medical aid and beyond.";
-      },
       thanks: function (code, freq, amount, anon) {
         return (
           "Thank you! Your transfer code is " + code + ". " +
