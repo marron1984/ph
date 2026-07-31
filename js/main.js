@@ -154,6 +154,27 @@
       localStorage.setItem(KEY, JSON.stringify(records));
     } catch (err) { /* ストレージ不可でも申込は継続 */ }
 
+    // 送信先が設定されていれば、申込データを財団側へ送信して保管
+    // （js/config.js の PLP_SUBMIT_URL を設定すると有効になります）
+    if (window.PLP_SUBMIT_URL) {
+      try {
+        fetch(window.PLP_SUBMIT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          keepalive: true,
+          body: new URLSearchParams({
+            datetime: new Date().toISOString(),
+            code: currentCode,
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            amount: String(selectedAmount),
+            anonymous: document.getElementById("anonymous").checked ? "yes" : "no",
+            page: document.documentElement.lang || "ja"
+          })
+        }).catch(function () {});
+      } catch (err2) { /* 送信失敗でも申込は継続 */ }
+    }
+
     var anonChecked = document.getElementById("anonymous").checked;
     thanksBody.textContent = T.thanks ? T.thanks(currentCode, yen(selectedAmount), anonChecked) :
       "お申し込みありがとうございます。あなたの振込番号は「" +

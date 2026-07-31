@@ -98,6 +98,41 @@ python3 -m http.server 8000
   （`js/report.js`）。実運用では入金確認済みの名簿への差し替えを推奨
 - 「匿名で寄付する」を選んだ方は掲載されない旨と、掲載修正の連絡先を明記
 
+### 申込データ（お名前・メールアドレス）の保管
+
+寄付フォームの申込内容（受付日時・振込番号・お名前・メールアドレス・金額・
+匿名希望・ページ言語）を財団側で保管するには、**`js/config.js` の
+`PLP_SUBMIT_URL` に送信先URLを1つ設定**します。設定すると申込のたびに
+データが自動送信されます（未設定の間は申込者の端末保存のみ）。
+
+**方法A: Formspree（最も簡単・メール通知つき）**
+
+1. https://formspree.io/ でアカウント作成 → New Form
+2. 発行されたエンドポイント（`https://formspree.io/f/xxxxxxxx`）を
+   `js/config.js` に設定
+
+**方法B: Googleスプレッドシート（無料・件数無制限）**
+
+1. 新しいスプレッドシートを作成し、メニューの「拡張機能 → Apps Script」を開く
+2. 以下を貼り付けて保存:
+
+```javascript
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var p = e.parameter;
+  sheet.appendRow([new Date(), p.code, p.name, p.email, p.amount, p.anonymous, p.page]);
+  return ContentService.createTextOutput("ok");
+}
+```
+
+3. 「デプロイ → 新しいデプロイ → ウェブアプリ」
+   （実行ユーザー: 自分／アクセス: 全員）で公開
+4. 発行されたURL（`https://script.google.com/macros/s/…/exec`）を
+   `js/config.js` に設定
+
+どちらの方法でも申込者の端末保存（管理画面の受付リスト）は並行して動作します。
+フォームには個人情報の利用目的（受付・入金確認・連絡のみ）を明記済みです。
+
 ### 管理画面（admin.html）
 
 `admin.html` で、発行済みの振込番号と申込者を確認できます。
