@@ -14,12 +14,15 @@
     records = [];
   }
 
-  // HTMLに固定掲載済みの名前は重複させない
+  // HTMLに固定掲載済みの名前は重複させない（「様」を除いた名前で照合）
+  var stripHonorific = function (s) {
+    return s.replace(/\s*様$/, "").trim();
+  };
   var seen = {};
   Array.prototype.forEach.call(
     grid.querySelectorAll(".donor-chip"),
     function (chip) {
-      seen[chip.textContent.trim()] = true;
+      seen[stripHonorific(chip.textContent)] = true;
     }
   );
 
@@ -42,7 +45,7 @@
   names.forEach(function (name) {
     var chip = document.createElement("span");
     chip.className = "donor-chip";
-    chip.textContent = name;
+    chip.textContent = name + " 様";
     grid.appendChild(chip);
   });
 })();
