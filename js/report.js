@@ -4,8 +4,8 @@
 
   var KEY = "plp_kifu_records";
   var grid = document.getElementById("donor-grid");
-  var empty = document.getElementById("donor-empty");
   if (!grid) return;
+  var empty = document.getElementById("donor-empty");
 
   var records;
   try {
@@ -14,8 +14,16 @@
     records = [];
   }
 
-  // 匿名希望を除き、受付順（古い順）に重複なく掲載
+  // HTMLに固定掲載済みの名前は重複させない
   var seen = {};
+  Array.prototype.forEach.call(
+    grid.querySelectorAll(".donor-chip"),
+    function (chip) {
+      seen[chip.textContent.trim()] = true;
+    }
+  );
+
+  // 匿名希望を除き、受付順（古い順）に重複なく掲載
   var names = [];
   records
     .slice()
@@ -28,9 +36,9 @@
       names.push(name);
     });
 
-  if (!names.length) return; // 掲載なし → 案内文を表示したまま
+  if (!names.length) return;
 
-  empty.remove();
+  if (empty) empty.remove();
   names.forEach(function (name) {
     var chip = document.createElement("span");
     chip.className = "donor-chip";
